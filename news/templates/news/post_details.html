@@ -1,0 +1,62 @@
+{% extends 'news/base.html' %}
+{% load static %}
+
+{% block titleh %}
+	{% if title %}
+		<title>Kora Forum - {{ title }}</title>
+	{% else %}
+		<title>Kora Forum - Home</title>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+<br>
+	<div class="row">
+		<div class="col-md-6 offset-md-3 news_card" id="news_card_full">
+			<p class="text-primary text-center posted_date"><span>posted on {{ post.date_created|date:'D d-M-Y ' }}</span></p>				
+			<div class="news_full_detail" id="news_detail_full_body">
+				<h5>{{ post.title }}</h5><br>
+				<p>{{ post.body }}</p>
+			</div>
+			{% for image in post.postimage_set.all %}
+				<div class="news_full_detail" id="news_detail_full_img">
+					<a href="{% url 'news:single_image' post.title post.id  image.id %} " target="blank"><img src="{{ image.image_filename.url }}" class="card-img d-block w-100" alt="Picture"></a>
+					{% if image.description %}
+					<p>{{image.description|truncatechars:40 }}</p>
+					{% endif %}
+				</div>
+			{% endfor %}
+			
+			<div class="all_post_comments">
+				<br>
+				{% if post.comment_set.all %}
+					<h5>Comments:</h5><br>
+					<div class="row">
+						{% for comment in post.comment_set.all %}
+						<br>
+						<div class="each_comment">
+							<p class="author_comment text-warning">Commented by: <b>{{ comment.author }}</b> on <span class="text-primary">{{ comment.date_created|date:'D d-M-Y' }}</span></p>
+							<div class="comment_body">
+								<p>{{ comment.body}}</p>
+							</div>
+							<br>
+						</div>
+						
+					{% endfor %}
+					</div>
+					
+				{% else %}
+					<p>No comments yet!</p>
+				{% endif %}<br>
+				<div class="row">
+					<div class="add_comment">
+						<a href="{% url 'news:create_comment' pk=post.id %}" class="btn btn-primary">Add Comment</a>
+					</div>
+				</div>
+					
+			</div>			
+	    </div>
+	</div>
+						
+
+{% endblock %}

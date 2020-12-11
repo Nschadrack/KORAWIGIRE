@@ -1,0 +1,63 @@
+{% extends 'kofaob_admin/base.html' %}
+
+{% block content %}
+	<div class="container-fluid">
+	<br>
+		<div class="row">
+			<div class="col-md-3">
+				<div class="card card-body bg-success">
+					<h4 class="card-header">Total Messages:</h4>
+					<hr>
+					<h2 class="card-text text-center">{{contact_messages.count}}</h2>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="card card-body bg-success">
+					
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="card card-body bg-success">
+					<form method="GET" class="form-inline">
+						{{ myFilter.form }}
+						<input type="submit" name="searchsubmit" value="search" class="btn btn-primary btn-lg" id="searchbtn">
+					</form>
+				</div>
+			</div>	
+		</div>
+		{% for message in messages %}
+			<span style="background-color:green; color:white; padding:15px; margin-left:200px; ">{{ message }}</span>
+		{% endfor %}<br><br>
+		<div class="row">
+			<div class="col-md-12">
+				{% if contact_messages %}
+					<h1 class="text-center">All Contact Messages</h1><br><hr>
+					<table class="table-hover table-dark">
+						<thead class="text-center">
+							<th></th>
+							<th><h3>FULL_NAME</h3></th>
+							<th><h3>EMAIL</h3></th>
+							<th><h3>SUBJECT</h3></th>
+							<th><h3>MESSAGE</h3></th>
+							<th><h3>DATE_RECEIVED</h3></th>
+						</thead>
+						{% for message in contact_messages %}
+							<tr>
+								<td><a href="{% url 'news:singlemessage' message.id %}" class="btn btn-primary">View</a></td>
+								<td>{{ message.full_name }}</td>
+								<td>{{ message.email }}</td>
+								<td>{{ message.subject }}</td>
+								<td>{{ message.message|truncatechars:200 }}</td>
+								<td>{{ message.date_created }}</td>
+							</tr>
+						{% endfor %}
+					</table>
+				{% else %}
+					<h1 class="text-center">No Contact Messages</h1><br><hr>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	
+
+{% endblock %}

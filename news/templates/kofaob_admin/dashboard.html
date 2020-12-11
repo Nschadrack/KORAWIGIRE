@@ -1,0 +1,86 @@
+{% extends 'kofaob_admin/base.html' %}
+
+{% block content %}
+<div class="container-fluid text-white">
+	<br>
+	<div class="row">
+		<div class="col-md-3">
+			<div class="card card-body bg-success">
+				<h4 class="card-header">Total Posts:</h4>
+				<hr>
+				<h2 class="card-text text-center">{{posts.count}}</h2>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="card card-body bg-success">
+				<h4 class="card-header">Total Comments:</h4>
+				<hr>
+				<h2 class="card-text text-center">{{comments.count}}</h2>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="card card-body bg-success">
+				<form method="GET" class="form-inline">
+					{{ myFilter.form }}
+					<input type="submit" name="searchsubmit" value="search" class="btn btn-primary btn-lg" id="searchbtn">
+				</form>
+			</div>
+		</div>	
+	</div>
+	<hr>
+	<br>
+	<div class="row" id="posts_dashboard">
+		<div class="col-md-12">
+			<a href="{% url 'news:create_post' %}" class="btn btn-outline-primary" id="create_new_post">Create New Post</a><br><br>
+			{% if posts %}
+			<table class="table-striped table-bordered table-dark table-hover dashboard_table">
+				<h2 class="text-dark text-center">List Of All Posts</h2>
+				<thead>
+					<th></th>
+					<th class="text-center"><h2>TITLE</h2></th>
+					<th class="text-center"><h2>BODY</h2></th>
+					<th class="text-center"><h2>DATE_CREATED</h2></th>
+				</thead>
+				{% for post in posts %}
+					<tr>
+						<td class="text-center"><a href="{% url 'news:admin_post' post.id %}" class="btn btn-primary">View</a></td>
+						<td class="text-left">{{ post.title }}</td>
+						<td class="text-left">{{ post.body|truncatechars:200 }}</td>
+						<td class="text-left">{{ post.date_created }}</td>
+					</tr>
+				{% endfor %}
+			</table>
+			{% else %}
+			<h4 class="text-dark text-center">No posts yet</h4>
+			{% endif %}
+		</div>
+	</div><br><br>
+	<div class="row" id="comments_dashboard">
+		<div class="col-md-12">
+			{% if comments %}
+			<table class="table-striped table-bordered bg-success table-hover dashboard_table">
+				<h2 class="text-white text-center">List Of All Comments</h2>
+				<thead>
+					<th></th>
+					<th class="text-center"><h2>COMMENT</h2></th>
+					<th class="text-center"><h2>AUTHOR</h2></th>
+					<th class="text-center"><h2>DATE_CREATED</h2></th>
+				</thead>
+				{% for comment in comments %}
+					<tr>
+						<td><a href="{% url 'news:admin_post_comment' comment.post.id comment.pk %}" class="btn btn-info" id="view_comment">View</a></td>
+						<td class="text-left">{{ comment.body|truncatechars:200 }}</td>
+						<td class="text-left">{{ comment.author}}</td>
+						<td class="text-left">{{ comment.date_created }}</td>
+					</tr>
+				{% endfor %}
+			</table>
+			{% else %}
+			<h4 class="text-white text-center">No comment yet</h4>
+			{% endif %}
+		</div>
+	</div>
+</div>
+
+<br><br><br>
+{% endblock %}

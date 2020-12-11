@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titleh %}
+	{% if title %}
+		<title>Kora Forum - {{ title }}</title>
+	{% else %}
+		<title>Kora Forum - Home</title>
+	{% endif %}
+{% endblock %}
+{% block content %}
+<br><br><br>
+	<div class="row">
+		<div class="col-md-8 offset-md-2">
+			<div class="card card-body">
+				<h5 class="text-lowercase">If you have will and heart to help, you can send donation through this bank account</h5><br>
+				<h6>Bank name: BPR</h6>
+				<h6>Account number: 511-1151-6581-0198</h6><br><br>
+
+
+				<h6>Thanks for your great participation in saving life of many people, and in protecting your environment!</h6><br><br>
+			</div>
+		</div>
+		
+	</div>
+	<br><br><br><br><br><br><br><br><br>
+
+{% endblock %}

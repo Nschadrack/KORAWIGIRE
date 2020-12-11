@@ -1,0 +1,129 @@
+{% extends 'kofaob_admin/base.html' %}
+
+{% block content %}
+<br>
+<div class="container-fluid text-white">
+	<div class="row">
+		<div class="col-md-8">
+			<div class="card card-body bg-success">
+				<h1 class="card-title text-center">Post Title</h1>
+				<hr>
+				<h5 class="card-text">{{ post.title }}</h5>
+				<hr>
+				<a href="#post_view" class="btn btn-outline-dark" id="view_full_post" onclick="showPost();">View Full Post</a>
+			</div>
+		</div>
+		<div class="col-md-2">
+			<div class="card card-body bg-success text-center">
+				<h5>Total Comments:</h5>
+				<hr>
+				<h2 class="card-text">{{ post.comments }}</h2>
+			</div>
+		</div>
+		<div class="col-md-2">
+			<div class="card card-body bg-success text-center">
+				<h5>Total Images:</h5>
+				<hr>
+				<h2 class="card-text">{{ post.postimage_set.all.count }}</h2>
+			</div>
+		</div>
+	</div>
+	<hr>
+	<div class="row bg-white" style="padding:10px;">
+			<div class="col-md-3">
+				<a href="{% url 'news:create_comment' post.id %}" class="btn btn-outline-primary text-center">Add Comment to this post</a>
+			</div>
+			<div class="col-md-3">
+				<a href="{% url 'news:add_post_images' post.id %}" class="btn btn-outline-primary text-center">Add Images to this post</a>
+			</div>
+			<div class="col-md-3">
+				<a href="{% url 'news:delete_post' post.id %}" class="btn btn-outline-danger text-center">Delete Post</a>
+			</div>
+			<div class="col-md-3">
+				<a href="{% url 'news:update_post' post.id %}" class="btn btn-outline-info text-center">Update Post</a>
+			</div>	
+	</div>
+	<hr>
+	<div class="row post_comments_view">
+		<div class="col-md-12">
+			<table class="table-bordered table-striped bg-success dashboard_table">
+				{% if post.comment_set.all %}
+				<thead>
+					<th>COMMENT</th>
+					<th>AUTHOR</th>
+					<th>DATE_CREATED</th>
+					<th></th>
+				</thead>
+				{% for comment in post.comment_set.all %}
+				<tr>
+					<td>{{ comment.body|truncatechars:300 }}</td>
+					<td>{{ comment.author }}</td>
+					<td>{{ post.date_created }}</td>
+					<td><a href="{% url 'news:admin_post_comment' post.id comment.pk %}" class="btn btn-info" id="view_comment">View</a></td>
+				</tr>
+				{% endfor %}
+				{% else %}
+				<p>No Comments yet!</p>
+				{% endif %}
+
+			</table>
+		</div>
+	</div>
+	<br><br><br>
+	<div class="row post_comments_view">
+		<div class="col-md-12">
+			<h1 class="text-center">Post Images</h1>
+			<table class="table-bordered table-striped bg-success dashboard_table" style="margin-left:auto;margin-right:auto;">
+				{% if post.postimage_set.all %}
+				<thead>
+					<th>IMAGE_FILENAME</th>
+					<th>DESCRIPTION</th>
+					<th></th>
+					<th></th>
+				</thead>
+				{% for image in post.postimage_set.all %}
+				<tr>
+					<td>{{ image.image_filename }}</td>
+					<td>{{ image.description }}</td>
+					<td><a href="{% url 'news:single_image' post.title post.id  image.id %}" class="btn btn-info" target="blank">View</a></td>
+					<td><a href="{% url 'news:delete_image' image.id %}" class="btn btn-danger">Delete</a></td>
+				</tr>
+				{% endfor %}
+				{% else %}
+				<p>This Post has no images!</p>
+				{% endif %}
+
+			</table>
+		</div>
+	</div>
+	<br><hr><br>
+	<div id="post_view">
+		{% include 'kofaob_admin/_post_details.html' %}
+	</div>
+</div>
+
+<script>
+	var postBtn = document.getElementById('view_full_post');	
+	var commentBtn =document.getElementById('view_comment');
+
+	function showPost(){
+		var post = document.getElementById('post_view');
+		var comment = document.getElementById('comment_view');
+		post.style.display='block';
+		comment.style.display='none';
+	}
+	function showComment(){
+		var post = document.getElementById('post_view');
+		var comment = document.getElementById('comment_view');
+		post.style.display='none';
+		comment.style.display='block';
+	}
+	function ViewComments(){
+		var comments= document.getElementById('view_all_comments');
+		var btn = document.getElementById('view_all_commentsbtn');
+		comments.style.display='block';
+		btn.style.display='none';
+	}
+</script>
+
+{% endblock %}

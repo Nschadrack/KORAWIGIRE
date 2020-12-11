@@ -1,0 +1,23 @@
+{% extends 'kofaob_admin/base.html' %}
+
+{% block content %}
+
+	<div class="container-fluid bg-success">
+		<br><br>
+		<div class="row">
+			<div class="col-md-6 offset-3">
+				<p class="font-italic">Received on: <span class="text-secondary">{{ message.date_created }}</span></p>
+				<h4 class="text-white">From: <a href="mailto:{{ message.email }}" class="text-white">{{ message.email }}</a></h4>
+				<br>
+				<h5 class="text-left">{{ message.subject }}</h5>
+				<br>
+				<p class="text-justify">{{ message.message }}</p><br><br>
+				<a href="{% url 'news:deletemessage' message.id %}" class="btn btn-outline-danger btn-lg">Delete Message</a>
+			</div>
+		</div>
+		<br><br><br><br><br><br>
+	</div>
+	
+	
+
+{% endblock %}

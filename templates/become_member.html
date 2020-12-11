@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titleh %}
+	{% if title %}
+		<title>Kora Forum - {{ title }}</title>
+	{% else %}
+		<title>Kora Forum - Home</title>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+<br><br><br>
+	<div class="row">
+		<div class="col-md-8 offset-md-2">
+			<div class="card card-body">
+				<h5 class="text-lowercase">THE CRITERIA AND PROCEDURES FOR ADHESION OF MEMBERSHIP</h5><br>
+				<div class="container">
+					<ul>
+						<li class="font-weight-bold">Membership conditions</li>
+						<ol>
+							<li>Endorse the vision, mission and goals of KOFAOB</li>
+							<li>Contribute to the goals of KOFAOB through coordinated actions</li>
+							<li>Pay membership fees and annual fees</li>
+							<li>Write to the chairman of the board of directors a letter of application for membership</li>
+						</ol>
+					</ul>
+				</div>
+			</div>
+		
+		</div>
+	</div>
+	<br><br><br><br><br><br><br><br><br>
+
+{% endblock %}

@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titleh %}
+	{% if title %}
+		<title>Kora Forum - {{ title }}</title>
+	{% else %}
+		<title>Kora Forum - Home</title>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+	<div class="scrolling_start">
+			<div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
+				<ol class="carousel-indicators">
+			    <li data-target="#carouselExampleFade" data-slide-to="0" class="active"></li>
+			    <li data-target="#carouselExampleFade" data-slide-to="1"></li>
+			    <li data-target="#carouselExampleFade" data-slide-to="2"></li>
+			    <li data-target="#carouselExampleFade" data-slide-to="3"></li>
+			    <li data-target="#carouselExampleFade" data-slide-to="4"></li>
+			  </ol>
+				  <div class="carousel-inner">
+				    <div class="carousel-item active">
+				      <img src="{% static '/base/images/kigali_awarded_upholding_environment.jpg' %}" class="d-block w-100" alt="Picture">
+				      <div class="carousel-caption d-none d-md-block">
+				        <p>Deforestation is changing our climate, harming people and natural world</p>
+				      </div>
+				    </div>
+				    <div class="carousel-item" data-interval="2000">
+				      <img src="{% static '/base/images/p07n19vr.jpg' %}" class="d-block w-100" alt="Picture">
+				      <div class="carousel-caption d-none d-md-block">
+				        <p>At least do not ruin the life of those trees, depending on which we live</p>
+				      </div>
+				    </div>
+				    <div class="carousel-item " data-interval="2000">
+				      <img src="{% static '/base/images/child_poverty2.jpg' %}" class="d-block w-100" alt="Picture">
+				      <div class="carousel-caption d-none d-md-block">
+				        <p>we don't need to have deep pocket or be rich to help the needy, the poor and the hungry we need to have a heart</p>
+				      </div>
+				    </div>
+				    <div class="carousel-item" data-interval="2000">
+				      <img src="{% static '/base/images/child_poverty1.jpg' %}" class="d-block w-100" alt="Picture">
+				      <div class="carousel-caption d-none d-md-block">
+				        <p>Help others to achieve their dreams and you will achieve yours.</p>
+				      </div>
+				    </div>
+				    <div class="carousel-item" data-interval="2000">
+				      <img src="{% static '/base/images/imigano1.jpeg' %}" class="d-block w-100" alt="Picture">
+				    </div>
+				  </div>
+			</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-10 explanator_activities">
+			<div class="jumbotron explanator">
+				<p><strong><em>KOFAOB</em></strong> in full stands for Kora Forum And Other Basic  mainly formed by youth after observing that some part of communities in Karongi District particularly kibuye are vulnerable due to the extreme poverty and we decided to come together to help those communities, we all believe that everyone can work and leave the category of being poor. Which means Kora Ubeho linked with Akazi kose ukoze neza kandi ugakunze kagutunga kandi kagagukura mu murongo w'ubukene. Under our main purposes, we can achieve it together. Beside that our environment is the most valuable gift we were given, after observing how environment is being damaged we come up with will to do our best for helping the World for protecting our environment through sensibilization and other activities we will be doing with our communities</p>
+				<a href="{% url 'base:about' %}" class="btn btn-primary">Further Information</a>
+			</div>
+			<div class="jumbotron activites">
+				<h2> Our main purposes</h2>
+				<div class="single-activity">
+					<img src="{% static '/base/images/imigano2.jpeg' %}" class="d-block w-100" alt="Picture">
+					<div class="single-activity-p">
+						<p>Environmental Protection,<br>Our environment is under distress and it is not a hidden fact anymore. The threat it is facing right now is alarming and it is our duty to save it before it gets too late. As inhabitants of this earth, everyone must come together to do their bit to save our environment</p>
+					</div>
+				</div>
+				<div class="single-activity">				
+					<img src="{% static '/base/images/promote_living_poor_people.jpg' %}" class="d-block w-100" alt="Picture">
+					<div class="single-activity-p">
+						<p>Improving the living conditions of young people and women in ubudehe category 1</p>
+					</div>
+				</div>
+				<div class="single-activity">
+					<img src="{% static '/base/images/images4.jpeg' %}" class="d-block w-100" alt="Picture">
+					<div class="single-activity-p">
+						<p>Promote projects aiming to fight extreme poverty of youth and women in ubudehe category 1</p>
+					</div>
+				</div>
+				<div class="single-activity">
+					<img src="{% static '/base/images/education_images.jpg' %}" class="d-block w-100" alt="Picture">
+					<div class="single-activity-p">
+						<p>Promote education of young people living in extreme poverty</p>
+					</div>
+				</div>
+				<div class="single-activity">
+					<img src="{% static '/base/images/images1.jpeg' %}" class="d-block w-100" alt="Picture">
+					<div class="single-activity-p">
+						<p>Advocate with local and national authorities</p>
+					</div>
+				</div>
+				
+			</div>		
+		</div>
+		<div class="col-md-2 upcoming_events_part">
+			{% if posts %}
+				<h4>Latest news</h4>
+				{% for post in posts %}
+					<h6><a href="{% url 'news:post_details' post.title post.id post.date_created.day post.date_created.month post.date_created.year %}">{{ post.title|truncatechars:100 }}</a> </h6>
+				{% endfor %}
+			{% else %}
+				<h4>No Lastest News</h4>
+			{% endif %}
+		</div>	
+	</div>
+		<div class="scrolling_events">
+			{% if images %}
+			<h2>Recent events</h2>
+			<div id="carouselevents" class="carousel slide carousel-fade" data-ride="carousel">
+				<ol class="carousel-indicators">
+					<li data-target="#carouselevents" data-slide-to="0" class="active"></li>
+					{% for num in numbers %}
+						<li data-target="#carouselevents" data-slide-to="{{ num }}"></li>
+					{% endfor %}
+			    </ol>
+				    <div class="carousel-inner">
+				    	<div class="carousel-item active" data-interval="2000">
+				    		{% if first_image %}
+					        <img src="{{ first_image.image_filename.url }}" class="d-block w-100" alt="Picture">
+						        <div class="carousel-caption d-none d-md-block">
+						        	<p>{{ first_image.description }}</p>
+						        </div>
+						    {% else %}
+						    	<img src="{% static '/base/images/imigano2.jpeg' %}" class="d-block w-100" alt="Picture">
+						    	<div class="carousel-caption d-none d-md-block">
+						        	<p>   </p>
+						        </div>
+						    {% endif %}
+				    	</div>
+					  	{% for image in images %}
+					  		<div class="carousel-item" data-interval="2000">
+					  			{% if image %}
+					      			<img src="{{ image.image_filename.url }}" class="d-block w-100" alt="Picture">
+					      			{% if image.description %}
+								        <div class="carousel-caption d-none d-md-block">
+								        	<p>{{ image.description }}</p>
+								        </div>
+							        {% endif %}
+						        {% else %}
+						        	<img src="{% static '/base/images/imigano2.jpeg' %}" class="d-block w-100" alt="Picture">
+						        {% endif %}
+				    		</div>
+					  	{% endfor %}					
+				    </div>
+			</div>
+			{% else %}
+				<img src="{% static '/base/images/imigano2.jpeg' %}" class="d-block w-100" alt="Picture">
+			{% endif %}
+
+	</div>
+
+{% endblock %}

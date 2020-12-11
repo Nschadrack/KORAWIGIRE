@@ -1,0 +1,40 @@
+{% extends 'kofaob_admin/base.html' %}
+
+{% block titleh %}
+	{% if title %}
+		<title>Kora Forum - {{ title }}</title>
+	{% else %}
+		<title>Kora Forum - Home</title>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+<br><br>
+	<div class="row">
+		<div class="col-md-6 offset-md-3 bg-white"><br><br>
+			{% if post_message %}
+				<h2 class="text-center">{{ post_message }}</h2>
+			{% endif %}
+			{% if post_image %}
+				<h2 class="text-center">{{ post_image }}</h2>
+			{% endif %}
+			{% if comment_message %}
+				<h2 class="text-center">{{ comment_message }}</h2>
+			{% endif %}
+			<br><br>
+			<form method="POST">
+				{% csrf_token %}
+				<input type="submit" name="" value="Delete" class="btn btn-danger btn-lg" style="margin-left:150px;">
+				{% if post_message %}
+					<a href="{% url 'news:dashboard' %}" class="btn btn-warning btn-lg" style="margin-left:20px;">Cancel</a>
+				{% endif %}
+				{% if comment_message or post_image %}
+					<a href="{% url 'news:admin_post' keep %}" class="btn btn-warning btn-lg" style="margin-left:20px;">Cancel</a>
+				{% endif %}
+					
+			</form>
+			<br><br>
+		</div>
+	</div>
+		
+{% endblock %}

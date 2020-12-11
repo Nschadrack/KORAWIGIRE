@@ -1,0 +1,32 @@
+{% extends 'news/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block titleh %}
+	{% if title %}
+		<title>Kora Forum - {{ title }}</title>
+	{% else %}
+		<title>Kora Forum - Home</title>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+<br><br>
+<div class="row">
+	<div class="col-md-4 offset-md-4">
+		<h1 id='comment_form_h1'>New Comment</h1><br>
+		<form class="post-form" method="post">
+			{% csrf_token %}
+			{{ form|crispy }}
+			<button type="submit" class="save btn btn-primary" id="comment_form_button">Post Comment</button>
+		</form> 
+	</div>
+</div>
+<script>
+	var form_field1=document.getElementsByTagName('input');
+	var form_field2=document.getElementsByTagName('textarea');
+		form_field1[1].placeholder="enter your full name...";
+		form_field2[0].placeholder="enter your comment here....";
+	
+</script>
+	
+{% endblock %}

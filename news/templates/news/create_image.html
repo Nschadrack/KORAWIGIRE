@@ -1,0 +1,31 @@
+{% extends 'kofaob_admin/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block titleh %}
+	{% if title %}
+		<title>Kora Forum - {{ title }}</title>
+	{% else %}
+		<title>Kora Forum - Home</title>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+<br>
+	<div class="row">
+		<div class="col-md-6 offset-md-3">
+			<h1>Add pictures to a Post</h1>
+			<form method="POST" action="" enctype="multipart/form-data">
+				{% csrf_token %}
+				{{ form|crispy }}
+				<br>
+				{% if True %}
+					<input type="submit" name="" value="Another picture" class="btn btn-primary btn-lg">
+				{% else %}
+					<input type="submit" name="" value="Add picture" class="btn btn-primary btn-lg">
+				{% endif %}
+				<a href="{% url 'news:pub_post' post.id %}" class="btn btn-warning btn-lg" style="margin-left:30px;">Cancel</a>
+			</form>
+		</div>
+	</div>
+	<br><br>
+{% endblock %}

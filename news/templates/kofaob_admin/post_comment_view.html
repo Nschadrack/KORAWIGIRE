@@ -1,0 +1,95 @@
+{% extends 'kofaob_admin/base.html' %}
+
+{% block content %}
+<br>
+<div class="container-fluid text-white">
+	<div class="row">
+		<div class="col-md-9">
+			<div class="card card-body bg-success">
+				<h1 class="card-title text-center">Post Title</h1>
+				<hr>
+				<h5 class="card-text">{{ post.title }}</h5>
+				<hr>
+				<a href="#post_view" class="btn btn-outline-dark" id="view_full_post" onclick="showPost();">View Full Post</a>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="card card-body bg-success text-center">
+				<h4>Total Comments:</h4>
+				<hr>
+				<h2 class="card-text">{{ post.comments }}</h2>
+			</div>
+		</div>
+	</div>
+	<hr>
+	<div class="row bg-white" style="padding:10px;">
+		<div class="col-md-6">
+			<a href="" class="btn btn-outline-primary text-center">Add Comment to this post</a>
+		</div>
+		<div class="col-md-3">
+			<a href="" class="btn btn-outline-danger text-center">Delete Post</a>
+		</div>
+		<div class="col-md-3">
+			<a href="" class="btn btn-outline-info text-center">Update Post</a>
+		</div>	
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table-bordered table-striped bg-success dashboard_table">
+				{% if post.comment_set.all %}
+				<thead>
+					<th>COMMENT</th>
+					<th>AUTHOR</th>
+					<th>DATE CREATED</th>
+					<th></th>
+					<th></th>
+				</thead>
+				{% for comment in post.comment_set.all %}
+				<tr>
+					<td>{{ comment.body|truncatechars:300 }}</td>
+					<td>{{ comment.author }}</td>
+					<td>{{ post.date_created }}</td>
+					<td><a href="#comment_view" class="btn btn-info" id="view_comment" onclick="showComment();">View</a></td>
+					<td><a href="{% url 'news:delete_comment' comment.id %}" class="btn btn-danger">Delete</a></td>
+				</tr>
+				{% endfor %}
+				{% else %}
+				<p>No Comments yet!</p>
+				{% endif %}
+
+			</table>
+		</div>
+	</div>
+	<br><hr><br>
+	
+	<div class="row">
+		
+	</div>
+</div>
+
+<script>
+	var postBtn = document.getElementById('view_full_post');	
+	var commentBtn =document.getElementById('view_comment');
+
+	function showPost(){
+		var post = document.getElementById('post_view');
+		var comment = document.getElementById('comment_view');
+		post.style.display='block';
+		comment.style.display='none';
+	}
+	function showComment(){
+		var post = document.getElementById('post_view');
+		var comment = document.getElementById('comment_view');
+		post.style.display='none';
+		comment.style.display='block';
+	}
+	function ViewComments(){
+		var comments= document.getElementById('view_all_comments');
+		var btn = document.getElementById('view_all_commentsbtn');
+		comments.style.display='block';
+		btn.style.display='none';
+	}
+</script>
+
+{% endblock %}

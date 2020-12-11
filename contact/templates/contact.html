@@ -1,0 +1,48 @@
+{% extends 'news/base.html' %}
+{% load crispy_forms_tags %}
+{% block titleh %}
+	{% if title_head %}
+		<title>Kora Forum - {{ title_head }}</title>
+	{% else %}
+		<title>Kora Forum - Home</title>
+	{% endif %}
+{% endblock %}
+{% block content %}
+<h1 id="contact_h1" class="text-center">{{ title_head }}</h1><br>
+<div class='row'>
+	<div class="col-md-2"></div>
+	<div class="col-md-4">	
+		{% if confirm_message %}
+			<h4 class="text-center">{{ confirm_message }}</h4>
+		{% endif %}<br><br>
+		{% if form %}
+			<form method="POST" action="">
+				{% csrf_token %}
+				{{ form|crispy }}
+				<input type="submit" value="Send Message" class="btn btn-primary" id="contact_btn">
+			</form>
+		{% endif %}
+	</div>
+	<div class="col-md-4" id="anotheroption">
+		<h5>For  quick request, you find us by calling:</h5>
+		<p><a href="tel:+250788497091" style="color:black;"><i class="fa fa-mobile"></i> +250788497091</a></p>
+		<p><a href="tel:+250783476137" style="color:black;"><i class="fa fa-mobile"></i> +250783476137</a></p>
+		<h5>If you want to reach to us physically, here is our office address:</h5>
+		<p><i class="fa fa-map-marker"></i> Rwanda, Western Province, Karongi District, Bwishyura Sector , Kibuye Cell, Rurembo Village</p><br>
+		<h5>If you Want to send us a letter, Send it to:</h5>
+		<p><i class="fa fa-inbox"></i> P. O. BOX 06 Kibuye </p><br>
+		<h5>Or send us an email through this form</h5>
+
+	</div>
+	<div class="col-md-2"></div>
+</div>
+
+<script>
+	// contactoption=document.getElementById('anotheroption');
+
+	// function hideAnotherColumn(){
+	// 	contactoption.style.display="none";
+	// }
+
+</script>
+{% endblock %}

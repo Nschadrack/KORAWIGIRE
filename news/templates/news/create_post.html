@@ -1,0 +1,33 @@
+{% extends 'kofaob_admin/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block titleh %}
+	{% if title %}
+		<title>Kora Forum - {{ title }}</title>
+	{% else %}
+		<title>Kora Forum - Home</title>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+	<br>
+	<div class="row">
+		<div class="col-md-6 offset-md-3">
+			{% if message %}
+			<h1>{{ message }}</h1><br>
+			{% endif %}
+			<form method="POST" action="">
+				{% csrf_token %}
+				{{ form|crispy }}
+				{% if create %}
+					<input type="submit" name="" value="Add Post" class="btn btn-primary btn-lg">
+				{% endif %}
+				{% if updating %}
+					<input type="submit" name="" value="Update" class="btn btn-primary btn-lg">
+				{% endif %}
+				<a href="{% url 'news:dashboard' %}" class="btn btn-warning btn-lg">Cancel</a>
+			</form>
+		</div>
+	</div>
+	<br><br>
+{% endblock %}

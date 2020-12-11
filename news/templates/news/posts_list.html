@@ -1,0 +1,62 @@
+{% extends 'news/base.html' %}
+{% load static %}
+
+{% block titleh %}
+	{% if title %}
+		<title>Kora Forum - {{ title }}</title>
+	{% else %}
+		<title>Kora Forum - Home</title>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+<br>
+    {% if posts %}
+		<h4 class="text-center display-4">Latest News</h4><hr><br>
+		<div class="row">
+			{% for post in posts %}
+				{% if post.publish_post %}
+				<div class="col-md-6 offset-md-3 news_card ">
+					<p class="text-primary text-center posted_date"><span>posted on {{ post.date_created|date:'D d-M-Y ' }}</span></p>
+					<a href="{% url 'news:post_details' post.title post.id post.date_created.day post.date_created.month post.date_created.year %}">
+						<div class="news_detail" id="news_detail_img">
+							{% if post.postimage_set.first.image_filename.url %}
+							<img src="{{ post.postimage_set.first.image_filename.url }}" class="card-img d-block w-100" alt="Picture">
+							{% endif %}
+						</div>
+						</a>
+
+						<div class="news_detail" id="news_detail_body">
+							<a href="{% url 'news:post_details' post.title post.id post.date_created.day post.date_created.month post.date_created.year %}">
+							<h5>{{ post.title|truncatechars:180 }}</h5>
+							</a>
+							<a href="{% url 'news:post_details' post.title post.id post.date_created.day post.date_created.month post.date_created.year %}" class="comments text-primary">Comments: {{ post.comments }}</a>
+						</div>
+							
+				</div>			
+			    {% endif %}
+		    {% endfor %}
+		</div>
+		<br><br>
+		<div class="row">
+			<div class="pagination col-md-6 offset-md-3">
+			    <span class="step-links">
+			        {% if posts.has_previous %}
+			            <a href="?page=1" style="margin-right:20px;">&laquo; first</a>
+			            <a href="?page={{ posts.previous_page_number }}">previous</a>
+			        {% endif %}
+
+			        {% if posts.has_next %}
+			            <a href="?page={{ posts.next_page_number }}" style="margin-right:20px;">next</a>
+			            <a href="?page={{ posts.paginator.num_pages }}">last &raquo;</a>
+			        {% endif %}
+			    </span>
+			</div>
+		</div>
+		<br><br>
+	{% else %}
+		<br><br><h4 class="text-center display-4">No Latest News</h4><hr><br><br><br><br><br><br>
+	{% endif %}							
+
+{% endblock %}
+

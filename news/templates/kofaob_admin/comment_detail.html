@@ -1,0 +1,41 @@
+{% extends 'kofaob_admin/base.html' %}
+
+{% block content %}
+	<br>
+	<div class="container-fluid text-white">
+		<div class="row">
+			<div class="col-md-6 offset-md-3 news_card" id="news_card_full">
+				<p class="text-primary text-center posted_date"><span>posted on {{ post.date_created|date:'D d-M-Y ' }}</span></p><hr>				
+				<div class="news_full_detail" id="news_detail_full_body">
+					<h5>{{ post.title }}</h5>
+					<p>{{ post.body }}</p>
+				</div>
+				{% for image in post.postimage_set.all %}
+					<div class="news_full_detail" id="news_detail_full_img">
+						<a href="{% url 'news:single_image' post.title post.id  image.id %} " target="blank"><img src="{{ image.image_filename.url }}" class="card-img d-block w-100" alt="Picture"></a>
+						{% if image.description %}
+						<p>{{image.description|truncatechars:40 }}</p>
+						{% endif %}
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6 offset-md-3 post_comments_detail">		
+				<h5>Comment detail:</h5><br>
+				<div class="row">
+					<br><hr>
+					<div class="each_comment">
+						<p class="author_comment text-warning">Commented by: <b>{{ comment.author }}</b> on <span class="text-primary">{{ comment.date_created|date:'D d-M-Y' }}</span></p><hr>
+						<div class="comment_body">
+							<p>{{ comment.body}}</p>
+						</div>
+						<br>
+						<a href="{% url 'news:delete_comment' comment.id %}" class="btn btn-danger">Delete Comment</a>
+						<a href="{% url 'news:create_comment' post.id %}" class="btn btn-primary" style="margin-left:60px;">Add Comment</a>
+					</div>
+				</div>				
+			</div>
+		</div><br><br><br><br>
+	</div>
+{% endblock %}
